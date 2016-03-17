@@ -113,7 +113,7 @@
     if ( tag == CRHTTPConnectionSocketTagBeginReadingRequest ) {
 
         // Parse the first line of the header
-        NSString* decodedHeaders = [[NSString alloc] initWithData:[data subdataWithRange:NSMakeRange(0, data.length - [CRConnection CRLFCRLFData].length)] encoding:NSUTF8StringEncoding];
+        NSString* decodedHeaders = [[NSString alloc] initWithBytesNoCopy:(void *)data.bytes length:data.length - [CRConnection CRLFCRLFData].length encoding:NSUTF8StringEncoding freeWhenDone:NO];
         NSArray<NSString*>* decodedHeaderLines = [decodedHeaders componentsSeparatedByString:@"\r\n"];
         NSString* decodedHeadersFirstLine = decodedHeaderLines[0];
         NSArray<NSString*>* decodedHeaderComponents = [decodedHeadersFirstLine componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
